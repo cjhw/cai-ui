@@ -1,0 +1,40 @@
+{
+  "name": "cai-ui",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.ts,.tsx,.vue --fix",
+    "prepare": "husky install",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs"
+  },
+  "dependencies": {
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@algolia/client-search": "^4.9.1",
+    "@types/node": "^18.7.16",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vitejs/plugin-vue-jsx": "^2.0.1",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.5.0",
+    "prettier": "^2.7.1",
+    "react": "16",
+    "react-dom": "16",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vitepress": "^1.0.0-alpha.6",
+    "vue-tsc": "^0.40.4"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,vue}": "eslint --cache --fix"
+  }
+}
