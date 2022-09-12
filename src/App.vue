@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import CButton from './button/src/button'
+
+const confirm = () => {
+  console.log('confirm')
+}
 </script>
 
 <template>
   <c-button type="primary" size="large">确定</c-button>
-  <c-button type="primary">取消</c-button>
-  <c-button size="small">取消</c-button>
+  <c-button type="primary" @click="confirm">取消</c-button>
+  <c-button size="small" disabled @click="confirm">取消</c-button>
 </template>
 
 <style scoped>
