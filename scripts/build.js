@@ -34,10 +34,10 @@ const rollupOptions = {
 const createPackageJson = name => {
   // 预设
   const fileStr = `{
-    "name": "${name ? name : 'cai-ui'}",
+    "name": "${name ? name : 'pjcai-ui'}",
     "version": "0.0.1",
-    "main": "${name ? 'index.umd.js' : 'cai-ui.umd.js'}",
-    "module": "${name ? 'index.mjs' : 'cai-ui.mjs'}",
+    "main": "${name ? 'index.umd.js' : 'pjcai-ui.umd.js'}",
+    "module": "${name ? 'index.mjs' : 'pjcai-ui.mjs'}",
     "author": "cjh",
     "description": "组件库cai-ui，冲冲冲",
     "repository": {
@@ -100,8 +100,8 @@ const buildAll = async () => {
         rollupOptions,
         lib: {
           entry: entryFile,
-          name: 'cai-ui',
-          fileName: 'cai-ui',
+          name: 'pjcai-ui',
+          fileName: 'pjcai-ui',
           formats: ['es', 'umd']
         },
         outDir: outputDir
