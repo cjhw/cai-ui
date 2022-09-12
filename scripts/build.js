@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 // 引入vite导出的build方法，用它来创建
 const { defineConfig, build } = require('vite')
 const vue = require('@vitejs/plugin-vue')
@@ -36,7 +37,7 @@ const createPackageJson = name => {
     "name": "${name ? name : 'cai-ui'}",
     "version": "0.0.1",
     "main": "${name ? 'index.umd.js' : 'cai-ui.umd.js'}",
-    "module": "${name ? 'index.umd.js' : 'cai-ui.es.js'}",
+    "module": "${name ? 'index.mjs' : 'cai-ui.mjs'}",
     "author": "cjh",
     "description": "组件库cai-ui，冲冲冲",
     "repository": {
@@ -68,6 +69,29 @@ const createPackageJson = name => {
 }
 
 // 执行创建
+
+// 单组件按需构建
+const buildSingle = async name => {
+  await build(
+    defineConfig({
+      ...baseConfig,
+      build: {
+        rollupOptions,
+        lib: {
+          entry: path.resolve(componentsDir, name),
+          name: 'index',
+          fileName: 'index',
+          formats: ['es', 'umd']
+        },
+        outDir: path.resolve(outputDir, name)
+      }
+    })
+  )
+
+  createPackageJson(name)
+}
+
+// 全量构建
 const buildAll = async () => {
   await build(
     defineConfig({
@@ -84,12 +108,25 @@ const buildAll = async () => {
       }
     })
   )
+
+  // 生成package.json
+  createPackageJson()
 }
 
 const buildLib = async () => {
   await buildAll()
 
-  createPackageJson()
+  // 按需打包
+  fs.readdirSync(componentsDir)
+    .filter(name => {
+      // 只要目录不要文件，且里面包含index.ts
+      const componentDir = path.resolve(componentsDir, name)
+      const isDir = fs.lstatSync(componentDir).isDirectory()
+      return isDir && fs.readdirSync(componentDir).includes('index.ts')
+    })
+    .forEach(async name => {
+      await buildSingle(name)
+    })
 }
 
 buildLib()

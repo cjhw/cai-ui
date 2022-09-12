@@ -1,8 +1,8 @@
 {
-    "name": "cai-ui",
+    "name": "button",
     "version": "0.0.1",
-    "main": "cai-ui.umd.js",
-    "module": "cai-ui.mjs",
+    "main": "index.umd.js",
+    "module": "index.mjs",
     "author": "cjh",
     "description": "组件库cai-ui，冲冲冲",
     "repository": {

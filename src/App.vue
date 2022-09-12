@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import CButton from './button/src/button'
-
 const confirm = () => {
   console.log('confirm')
 }
