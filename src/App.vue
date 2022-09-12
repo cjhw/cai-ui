@@ -3,8 +3,9 @@ import CButton from './button/src/button'
 </script>
 
 <template>
-  <c-button type="primary">确定</c-button>
-  <CButton>取消</CButton>
+  <c-button type="primary" size="large">确定</c-button>
+  <c-button type="primary">取消</c-button>
+  <c-button size="small">取消</c-button>
 </template>
 
 <style scoped>
