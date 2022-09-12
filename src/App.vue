@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CButton from './button/src/Button'
+import CButton from './button/src/button'
 </script>
 
 <template>
