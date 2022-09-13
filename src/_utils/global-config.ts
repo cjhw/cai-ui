@@ -2,7 +2,7 @@ import { getCurrentInstance } from 'vue'
 import type { App } from 'vue'
 
 const CLASS_PREFIX = 's'
-const GLOBAL_CONFIG_NAME = '_Cai'
+const GLOBAL_CONFIG_NAME = '_cai'
 const COMPONENT_PREFIX = 'C'
 export interface CaiUIOptions {
   classPrefix?: string

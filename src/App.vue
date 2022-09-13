@@ -8,6 +8,7 @@ const confirm = () => {
   <c-button type="primary" size="large" block>确定</c-button>
   <c-button type="primary" @click="confirm">取消</c-button>
   <c-button size="small" disabled @click="confirm">取消</c-button>
+  <c-tree></c-tree>
 </template>
 
 <style scoped>

@@ -2,7 +2,7 @@ import type { App, Plugin } from 'vue'
 import * as components from './components'
 import version from './version'
 
-const SheepUI = {
+const CaiUI = {
   version,
   install(app: App) {
     Object.keys(components).forEach(key => {
@@ -11,4 +11,4 @@ const SheepUI = {
   }
 }
 
-export default SheepUI
+export default CaiUI

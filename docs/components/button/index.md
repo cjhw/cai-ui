@@ -4,7 +4,7 @@
 
 ```vue
 <template>
-  <SButton type="text">文本</SButton>
+  <CButton type="primary">文本</CButton>
 </template>
 ```
 

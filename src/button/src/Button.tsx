@@ -3,7 +3,7 @@ import { defineComponent, toRefs } from 'vue'
 import { ButtonProps, buttonProps } from './button-type'
 
 export default defineComponent({
-  name: 'CButton',
+  name: 'Button',
   props: buttonProps,
   setup(props: ButtonProps, { slots }) {
     return () => {

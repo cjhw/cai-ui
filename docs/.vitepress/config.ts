@@ -11,7 +11,10 @@ const sidebar = {
       text: '数据录入',
       items: []
     },
-    { text: '数据展示', items: [] },
+    {
+      text: '数据展示',
+      items: [{ text: 'Tree 树', link: '/components/tree/' }]
+    },
     {
       text: '布局',
       items: []
