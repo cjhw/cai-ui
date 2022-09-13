@@ -50,7 +50,7 @@ export async function onCreate(args = { type: '' }) {
           {
             name: 'name',
             type: 'input',
-            message: blue('（必填）请输入组件name，将用作文件名和文件夹名称'),
+            message: blue('（必填）请输入组件name，将用作文件名和文件夹名称:'),
             validate(value: string) {
               if (value.trim() === '') {
                 return '组件name不能为空！'
@@ -61,7 +61,7 @@ export async function onCreate(args = { type: '' }) {
           {
             name: 'title',
             type: 'input',
-            message: blue('（必填）请输入组件中文名称，将用作文档列表中显示'),
+            message: blue('（必填）请输入组件中文名称，将用作文档列表中显示:'),
             validate(value: string) {
               if (value.trim() === '') {
                 return '组件名称不能为空！'
@@ -72,7 +72,7 @@ export async function onCreate(args = { type: '' }) {
           {
             name: 'category',
             type: 'list',
-            message: blue('（必填）请选择组件分类，将用作文档列表分类中'),
+            message: blue('（必填）请选择组件分类，将用作文档列表分类中:'),
             choices: DOCS_CATEGORIES,
             default: 0
           }
