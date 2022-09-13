@@ -13,7 +13,11 @@
   "devDependencies": {
     "commander": "^9.4.0",
     "fs-extra": "^10.1.0",
-    "inquirer": "^9.1.1",
+    "inquirer": "^8.2.4",
     "kolorist": "^1.6.0"
+  },
+  "dependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/inquirer": "8"
   }
 }
