@@ -1,7 +1,12 @@
 # 按钮 - Button
 
-:::info 这是HelloWorld组件，我们可以传递msg属性给它
- <HelloWorld></HelloWorld>
+:::demo 这是SButton组件，可以通过传递type来改变它的类型
+
+```vue
+<template>
+  <SButton type="text">文本</SButton>
+</template>
+```
+
 :::
 
-<Test></Test>
