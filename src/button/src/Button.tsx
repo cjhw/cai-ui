@@ -1,6 +1,6 @@
 import { defineComponent, toRefs } from 'vue'
 
-import { ButtonProps, buttonProps } from './button-types'
+import { ButtonProps, buttonProps } from './button-type'
 
 export default defineComponent({
   name: 'CButton',
