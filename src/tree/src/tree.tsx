@@ -1,63 +1,18 @@
 import { computed, defineComponent, ref, toRefs } from 'vue'
 import { IInnerTreeNode, TreeProps, treeProps } from './tree-type'
-import { generateInnerTree } from './utils'
+import useTree from '../hooks/useTree'
+
 export default defineComponent({
   name: 'Tree',
   props: treeProps,
   setup(props: TreeProps) {
     const { data } = toRefs(props)
-    const innerData = ref(generateInnerTree(data.value))
-
-    console.log(innerData.value)
-
-    const toggleNode = (node: IInnerTreeNode) => {
-      // 在原始的列表中获取该节点
-      // 在原始的列表中获取该节点
-      const cur = innerData.value.find(item => item.id === node.id)
-      if (cur) cur.expanded = !cur.expanded
-    }
-
-    // 获取字节点
-    const getChildren = (node: IInnerTreeNode): IInnerTreeNode[] => {
-      const result: IInnerTreeNode[] = []
-      const startIndex = innerData.value.findIndex(item => item.id === node.id)
-      //找到它后面所有的子节点
-      for (
-        let i = startIndex + 1;
-        i < innerData.value.length && node.level < innerData.value[i].level;
-        i++
-      ) {
-        result.push(innerData.value[i])
-      }
-      return result
-    }
-
-    // 获取那些展开的节点列表
-    const getExpandedTree = computed(() => {
-      // 收起的节点
-      let excludeNodes: IInnerTreeNode[] = []
-      const result: IInnerTreeNode[] = []
-
-      for (let item of innerData.value) {
-        // 如果遍历的节点在排除列表中，跳过本次循环
-        if (excludeNodes.map(node => node.id).includes(item.id)) {
-          continue
-        }
-        // 当前节点收起，它的子节点应该被排除掉
-        if (item.expanded !== true) {
-          excludeNodes = getChildren(item)
-          console.log(excludeNodes)
-        }
-        result.push(item)
-      }
-
-      return result
-    })
+    const { toggleNode, getExpendedTree, getChildren } = useTree(data)
 
     return () => {
       return (
         <div class="s-tree">
-          {getExpandedTree.value.map(treeNode => (
+          {getExpendedTree.value.map(treeNode => (
             <div
               class="s-tree-node hover:bg-slate-100 relative leading-8"
               style={{
