@@ -27,6 +27,11 @@ export const treeProps = {
   data: {
     type: Object as PropType<Array<ITreeNode>>,
     required: true
+  },
+  // 是否显示 checkbox
+  checkable: {
+    type: Boolean,
+    default: false
   }
 } as const
 

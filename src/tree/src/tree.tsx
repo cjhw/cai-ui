@@ -8,9 +8,10 @@ const NODE_INDENT = 24
 export default defineComponent({
   name: 'Tree',
   props: treeProps,
-  setup(props: TreeProps) {
-    const { data } = toRefs(props)
-    const { toggleNode, getExpendedTree, getChildren } = useTree(data)
+  setup(props: TreeProps, { slots }) {
+    const { data, checkable } = toRefs(props)
+    const { toggleNode, getExpendedTree, getChildren, toggleCheckNode } =
+      useTree(data)
 
     const spanStyle = (treeNode: IInnerTreeNode) => {
       return {
@@ -38,6 +39,7 @@ export default defineComponent({
                 ></span>
               )}
 
+              {/** 判断当前节点是否为叶子节点 */}
               {treeNode.isLeaf ? (
                 <span
                   style={{
@@ -45,17 +47,19 @@ export default defineComponent({
                     width: '25px'
                   }}
                 />
+              ) : slots.icon ? (
+                slots.icon({ nodeData: treeNode, toggleNode })
               ) : (
                 <svg
+                  onClick={() => toggleNode(treeNode)}
                   style={{
-                    width: '25px',
-                    height: '16px',
+                    width: '18px',
+                    height: '18px',
                     display: 'inline-block',
                     transform: treeNode.expanded ? 'rotate(90deg)' : ''
                   }}
                   viewBox="0 0 1024 1024"
                   xmlns="http://www.w3.org/2000/svg"
-                  onClick={() => toggleNode(treeNode)}
                 >
                   <path
                     fill="currentColor"
@@ -63,7 +67,17 @@ export default defineComponent({
                   ></path>
                 </svg>
               )}
-              {treeNode.label}
+              {/** 复选框 */}
+              {checkable.value && (
+                <input
+                  type="checkbox"
+                  style={{ marginRight: '8px' }}
+                  v-model={treeNode.checked}
+                  onClick={() => toggleCheckNode(treeNode)}
+                ></input>
+              )}
+              {/** 标签 */}
+              {slots.content ? slots.content(treeNode) : treeNode.label}
             </div>
           ))}
         </div>
