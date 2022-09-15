@@ -1,46 +1,21 @@
-import type { ITreeNode, IInnerTreeNode } from '../src/tree-type'
-import { reactive, Ref, unref, computed } from 'vue'
+import { ref, computed, Ref, unref } from 'vue'
+import { IInnerTreeNode, ITreeNode } from '../src/tree-type'
 import { generateInnerTree } from '../src/utils'
 
-export default function useTree(node: Ref<ITreeNode[]> | ITreeNode[]) {
-  const innerData: IInnerTreeNode[] = reactive(generateInnerTree(unref(node)))
+export default function useTree(tree: ITreeNode[] | Ref<ITreeNode[]>) {
+  const data = unref(tree)
+  const innerData = ref(generateInnerTree(data))
+
   const toggleNode = (node: IInnerTreeNode) => {
-    // 在原始的列表中获取该节点
-    // 在原始的列表中获取该节点
-    const cur = innerData.find(item => item.id === node.id)
+    const cur = innerData.value.find(item => item.id === node.id)
     if (cur) cur.expanded = !cur.expanded
   }
-
-  // 获取字节点
-  const getChildren = (
-    node: IInnerTreeNode,
-    recursive = true
-  ): IInnerTreeNode[] => {
-    const result: IInnerTreeNode[] = []
-    const startIndex = innerData.findIndex(item => item.id === node.id)
-    //找到它后面所有的子节点
-    for (
-      let i = startIndex + 1;
-      i < innerData.length && node.level < innerData[i].level;
-      i++
-    ) {
-      if (recursive) {
-        result.push(innerData[i])
-      } else if (node.level === innerData[i].level - 1) {
-        // 直接子节点
-        result.push(innerData[i])
-      }
-    }
-    return result
-  }
-
   // 获取那些展开的节点列表
-  const getExpendedTree = computed(() => {
-    // 收起的节点
+  const expendedTree = computed(() => {
     let excludeNodes: IInnerTreeNode[] = []
-    const result: IInnerTreeNode[] = []
+    const result = []
 
-    for (let item of innerData) {
+    for (const item of innerData.value) {
       // 如果遍历的节点在排除列表中，跳过本次循环
       if (excludeNodes.map(node => node.id).includes(item.id)) {
         continue
@@ -55,36 +30,78 @@ export default function useTree(node: Ref<ITreeNode[]> | ITreeNode[]) {
     return result
   })
 
-  // checkBox click 事件
-  const toggleCheckNode = (node: IInnerTreeNode) => {
-    // 避免初始化的时候 node 中没有 checked 设置
-    node.checked = !node.checked
-    // 父-子 联动
-    // 获取子节点，并同步他们的选中状态和父节点一致
-    getChildren(node).forEach(child => {
-      child.checked = node.checked
-    })
-    setChecked(node)
+  // 获取指定节点的子节点
+  const getChildren = (node: IInnerTreeNode, recursive = true) => {
+    const result = []
+    // 找到node 在列表中的索引
+    const startIndex = innerData.value.findIndex(item => item.id === node.id)
+    // 找到它后面所有子节点（level 比当前节点大）
+    for (
+      let i = startIndex + 1;
+      i < innerData.value.length && node.level < innerData.value[i].level;
+      i++
+    ) {
+      if (recursive) {
+        result.push(innerData.value[i])
+      } else if (node.level === innerData.value[i].level - 1) {
+        // 直接子节点
+        result.push(innerData.value[i])
+      }
+    }
+    return result
   }
 
-  // 子-父联动 并且设置父节点选中内容
-  const setChecked = (node: IInnerTreeNode) => {
+  // 计算参考线高度
+  const getChildrenExpanded = (
+    node: IInnerTreeNode,
+    result: IInnerTreeNode[] = []
+  ) => {
+    // 获取当前节点的直接子节点
+    const childrenNodes = getChildren(node, false)
+    result.push(...childrenNodes)
+    childrenNodes.forEach(item => {
+      if (item.expanded) {
+        getChildrenExpanded(item, result)
+      }
+    })
+    return result
+  }
+
+  const toggleCheckNode = (treeNode: IInnerTreeNode) => {
+    // 父节点可能一开始没有设置checked
+    // 这里手动设置一下
+    treeNode.checked = !treeNode.checked
+
+    // 获取所有子节点，设置它们checked跟父节点一致
+    getChildren(treeNode).forEach(child => {
+      child.checked = treeNode.checked
+    })
+
+    // 子-父联动
     // 获取父节点
-    const parentNode = innerData.find(item => item.id === node.parentId)
+    const parentNode = innerData.value.find(
+      item => item.id === treeNode.parentId
+    )
+    // 如果没有父节点，则没必要处理子到父的联动
     if (!parentNode) return
-    // 获取兄弟节点：相当于获取 parentNode 的直接子节点
+    // 获取兄弟节点：只是一个特殊的getChildren，仅获取父节点直接子节点，需要改造getChildren
     const siblingNodes = getChildren(parentNode, false)
-    // 兄弟节点是否全部选中状态
-    const siblingCheckStatus = siblingNodes.every(sibling => sibling.checked)
-    parentNode.checked = siblingCheckStatus
-    if (parentNode.parentId) setChecked(parentNode)
+    const checkedSiblingNodes = siblingNodes.filter(item => item.checked)
+
+    if (checkedSiblingNodes.length === siblingNodes.length) {
+      // 如果所有兄弟节点都被勾选，则设置父节点的checked属性为true
+      parentNode.checked = true
+    } else if (checkedSiblingNodes.length === 0) {
+      // 否则设置父节点的checked属性为false
+      parentNode.checked = false
+    }
   }
 
   return {
-    innerData,
+    expendedTree,
     toggleNode,
     getChildren,
-    getExpendedTree,
+    getChildrenExpanded,
     toggleCheckNode
   }
 }

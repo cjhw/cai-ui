@@ -32,6 +32,11 @@ export const treeProps = {
   checkable: {
     type: Boolean,
     default: false
+  },
+  // 是否显示参考线
+  lineable: {
+    type: Boolean,
+    default: false
   }
 } as const
 
