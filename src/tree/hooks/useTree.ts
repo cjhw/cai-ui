@@ -40,7 +40,6 @@ export default function useTree(node: Ref<ITreeNode[]> | ITreeNode[]) {
       // 当前节点收起，它的子节点应该被排除掉
       if (item.expanded !== true) {
         excludeNodes = getChildren(item)
-        console.log(excludeNodes)
       }
       result.push(item)
     }

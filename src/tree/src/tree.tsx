@@ -1,6 +1,9 @@
-import { computed, defineComponent, ref, toRefs } from 'vue'
+import { defineComponent, toRefs } from 'vue'
 import { IInnerTreeNode, TreeProps, treeProps } from './tree-type'
 import useTree from '../hooks/useTree'
+
+const NODE_HEIGHT = 28
+const NODE_INDENT = 24
 
 export default defineComponent({
   name: 'Tree',
@@ -9,6 +12,14 @@ export default defineComponent({
     const { data } = toRefs(props)
     const { toggleNode, getExpendedTree, getChildren } = useTree(data)
 
+    const spanStyle = (treeNode: IInnerTreeNode) => {
+      return {
+        height: `${NODE_HEIGHT * getChildren(treeNode).length}px`,
+        left: `${NODE_INDENT * (treeNode.level - 1) + 11}px`,
+        top: `${NODE_HEIGHT}px`
+      }
+    }
+
     return () => {
       return (
         <div class="s-tree">
@@ -16,9 +27,17 @@ export default defineComponent({
             <div
               class="s-tree-node hover:bg-slate-100 relative leading-8"
               style={{
-                paddingLeft: `${24 * (treeNode.level - 1)}px`
+                paddingLeft: `${NODE_INDENT * (treeNode.level - 1)}px`
               }}
             >
+              {/* 连接线 */}
+              {!treeNode.isLeaf && treeNode.expanded && (
+                <span
+                  class="s-tree-node__vline absolute w-px bg-gray-400"
+                  style={spanStyle(treeNode)}
+                ></span>
+              )}
+
               {treeNode.isLeaf ? (
                 <span
                   style={{
