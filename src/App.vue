@@ -1,14 +1,13 @@
 <script setup lang="ts">
+import VirtualList from './components/VirtualList.vue'
+
 const confirm = () => {
   console.log('confirm')
 }
 </script>
 
 <template>
-  <c-button type="primary" size="large" block>确定</c-button>
-  <c-button type="primary" @click="confirm">取消</c-button>
-  <c-button size="small" disabled @click="confirm">取消</c-button>
-  <c-tree></c-tree>
+  <VirtualList></VirtualList>
 </template>
 
 <style scoped>
