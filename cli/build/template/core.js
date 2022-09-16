@@ -3,7 +3,7 @@ exports.__esModule = true;
 var utils_1 = require("./utils");
 // 创建组件核心文件模板
 function genCoreTemplate(name) {
-    var compName = 'C' + (0, utils_1.upperFirst)(name);
+    var compName = (0, utils_1.upperFirst)(name);
     var propsTypeName = (0, utils_1.upperFirst)(name) + 'Props';
     var propsName = name + 'Props';
     var propsFileName = name + '-type';
