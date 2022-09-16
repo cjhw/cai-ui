@@ -3,6 +3,7 @@ import useTree from '../hooks/useTree'
 import { IInnerTreeNode, TreeProps, treeProps } from './tree-type'
 import CTreeNode from './components/tree-node'
 import CTreeNodeToggle from './components/tree-node-toggle'
+import '../style/tree.scss'
 
 export default defineComponent({
   name: 'Tree',
@@ -12,7 +13,7 @@ export default defineComponent({
     // 获取data
     const { data } = toRefs(props)
     const { slots } = context
-    const treeData = useTree(data, context)
+    const treeData = useTree(data.value, props, context)
     provide('TREE_UTILS', treeData)
     return () => {
       return (
