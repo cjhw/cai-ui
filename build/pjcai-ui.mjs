@@ -1,5 +1,5 @@
-import { defineComponent as c, toRefs as r, createVNode as f } from "vue";
-const i = {
+import { defineComponent as i, toRefs as f, createVNode as u } from "vue";
+const d = {
   type: {
     type: String,
     default: "secondary"
@@ -16,35 +16,49 @@ const i = {
     type: Boolean,
     default: !1
   }
-}, n = c({
-  name: "CButton",
-  props: i,
-  setup(t, {
-    slots: e
+}, b = i({
+  name: "Button",
+  props: d,
+  setup(e, {
+    slots: t
   }) {
     return () => {
       const {
-        type: o,
-        size: l,
+        type: n,
+        size: o,
         disabled: s,
         block: a
-      } = r(t), u = e.default ? e.default() : "\u6309\u94AE", d = a.value ? "s-btn--block" : "";
-      return f("button", {
+      } = f(e), c = t.default ? t.default() : "\u6309\u94AE", r = a.value ? "s-btn--block" : "";
+      return u("button", {
         disabled: s.value,
-        class: `s-btn s-btn--${o.value} s-btn--${l.value} ${d}`
-      }, [u]);
+        class: `s-btn s-btn--${n.value} s-btn--${o.value} ${r}`
+      }, [c]);
     };
   }
-}), p = {
-  install(t) {
-    t.component(n.name, n);
+}), P = "s", l = "_cai", m = "C", g = (e, t = { classPrefix: P }) => {
+  var n;
+  e.config.globalProperties[l] = {
+    ...(n = e.config.globalProperties[l]) != null ? n : {},
+    classPrefix: t.classPrefix
+  };
+}, C = (e) => {
+  var t;
+  return (t = e == null ? void 0 : e.componentPrefix) != null ? t : m;
+};
+function p(e, t, n) {
+  const o = C(n);
+  e.component(o + t.name) || (g(e, n), e.component(o + t.name, t));
+}
+const y = {
+  install(e, t) {
+    p(e, b, t);
   }
-}, b = [p], y = {
-  install(t) {
-    b.forEach((e) => t.use(e));
+}, x = [y], E = {
+  install(e) {
+    x.forEach((t) => e.use(t));
   }
 };
 export {
-  n as Button,
-  y as default
+  b as Button,
+  E as default
 };
