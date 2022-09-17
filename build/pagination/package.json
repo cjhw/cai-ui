@@ -1,0 +1,17 @@
+{
+    "name": "pagination",
+    "version": "0.0.1",
+    "main": "index.umd.js",
+    "module": "index.mjs",
+    "author": "cjh",
+    "description": "组件库cai-ui，冲冲冲",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/cjhw/cai-ui.git"
+    },
+    "keywords": ["vue3", "组件库", "tsx", "UI"],
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/cjhw/cai-ui/issues"
+    }
+  }
