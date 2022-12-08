@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed, onMounted, watch } from 'vue'
 import { PaginationProps, paginationProps } from './pagination-type'
 import '../style/pagination.scss'
 import CPager from './components/pager'
@@ -6,8 +6,8 @@ import CPager from './components/pager'
 export default defineComponent({
   name: 'Pagination',
   props: paginationProps,
-  emits: [],
-  setup(props: PaginationProps, ctx) {
+  emits: ['update:modelValue'],
+  setup(props: PaginationProps, { emit }) {
     // 1.首页和尾页是常驻的，如果只有1页，则不显示
     // 2.页码按钮有一个最大数量pagerCount，上图是7，也就是说最多显示7个页码按钮
     // 3.如果总页数totalPage大于pagerCount，则会出现显示不下的情况，这时显示不
@@ -19,13 +19,46 @@ export default defineComponent({
     // 8.当中间页码右边的页数小于totalPage-3时，应该出现右边的 ...
     const pager = ref()
 
+    const disablePrev = computed(() =>
+      pager.value ? pager.value.pageIndex < 2 : true
+    )
+
+    const disableNext = computed(() =>
+      pager.value ? pager.value.pageIndex > pager.value.totalPage - 1 : true
+    )
+
+    onMounted(() => {
+      watch(
+        () => pager.value.pageIndex,
+        (newVal: number) => {
+          emit('update:modelValue', newVal)
+        }
+      )
+      watch(
+        () => props.modelValue,
+        (newVal: number) => {
+          pager.value.pageIndex = newVal
+        }
+      )
+    })
+
     return () => {
       return (
         <div class="s-pagination">
-          <button onClick={() => pager.value.prevPage()}>上一页</button>
+          <button
+            disabled={disablePrev.value}
+            onClick={() => pager.value.prevPage()}
+          >
+            上一页
+          </button>
           {/* pager部分 */}
           <CPager {...props} ref={pager}></CPager>
-          <button onClick={() => pager.value.nextPage()}>下一页</button>
+          <button
+            disabled={disableNext.value}
+            onClick={() => pager.value.nextPage()}
+          >
+            下一页
+          </button>
         </div>
       )
     }
