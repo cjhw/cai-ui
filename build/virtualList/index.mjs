@@ -1,4 +1,4 @@
-import { defineComponent as x, toRefs as C, ref as r, computed as m, onMounted as _, createVNode as i } from "vue";
+import { defineComponent as x, toRefs as C, ref as r, computed as m, onMounted as _, createVNode as s } from "vue";
 const b = {
   data: {
     type: Array,
@@ -23,26 +23,26 @@ const L = x({
       data: n,
       itemHeight: l,
       component: c
-    } = C(e), u = r(), v = r(0), f = r(0), s = r(0), p = m(() => Math.ceil(v.value / l.value)), P = m(() => n.value.slice(s.value, Math.min(s.value + p.value, n.value.length)));
+    } = C(e), u = r(), v = r(0), f = r(0), i = r(0), p = m(() => Math.ceil(v.value / l.value)), P = m(() => n.value.slice(i.value, Math.min(i.value + p.value, n.value.length)));
     _(() => {
       var a;
       v.value = (a = u.value) == null ? void 0 : a.clientHeight;
     });
     const h = function(a) {
       const o = a.target.scrollTop;
-      s.value = Math.floor(o / l.value), f.value = o - o % l.value;
+      i.value = Math.floor(o / l.value), f.value = o - o % l.value;
     };
-    return () => i(c.value, {
+    return () => s(c.value, {
       class: "s-virtual-list__container",
       ref: u,
       onScroll: h
     }, {
-      default: () => [i("div", {
+      default: () => [s("div", {
         class: "s-virtual-list__blank",
         style: {
           height: `${n.value.length * l.value}px`
         }
-      }, null), i("div", {
+      }, null), s("div", {
         class: "s-virtual-list",
         style: {
           transform: `translate3d(0,${f.value}px,0)`
@@ -56,7 +56,7 @@ const L = x({
       })])]
     });
   }
-}), y = "s", g = "_cai", M = "C", N = (e, t = { classPrefix: y }) => {
+}), y = "c", g = "_cai", M = "C", N = (e, t = { classPrefix: y }) => {
   var n;
   e.config.globalProperties[g] = {
     ...(n = e.config.globalProperties[g]) != null ? n : {},

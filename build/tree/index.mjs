@@ -438,7 +438,7 @@ const re = E({
       })])]
     });
   }
-}), ae = "s", z = "_cai", se = "C", ce = (n, e = { classPrefix: ae }) => {
+}), ae = "c", z = "_cai", se = "C", ce = (n, e = { classPrefix: ae }) => {
   var r;
   n.config.globalProperties[z] = {
     ...(r = n.config.globalProperties[z]) != null ? r : {},

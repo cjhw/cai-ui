@@ -1,22 +1,17 @@
 {
-  "name": "pjcai-ui",
-  "version": "0.0.2",
-  "main": "pjcai-ui.umd.js",
-  "module": "pjcai-ui.mjs",
-  "author": "cjh",
-  "description": "组件库cai-ui，冲冲冲",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/cjhw/cai-ui.git"
-  },
-  "keywords": [
-    "vue3",
-    "组件库",
-    "tsx",
-    "UI"
-  ],
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/cjhw/cai-ui/issues"
+    "name": "pjcai-ui",
+    "version": "0.0.1",
+    "main": "pjcai-ui.umd.js",
+    "module": "pjcai-ui.mjs",
+    "author": "cjh",
+    "description": "组件库cai-ui，冲冲冲",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/cjhw/cai-ui.git"
+    },
+    "keywords": ["vue3", "组件库", "tsx", "UI"],
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/cjhw/cai-ui/issues"
+    }
   }
-}

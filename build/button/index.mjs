@@ -35,7 +35,7 @@ const u = {
       }, [c]);
     };
   }
-}), m = "s", l = "_cai", P = "C", g = (e, t = { classPrefix: m }) => {
+}), m = "c", l = "_cai", P = "C", g = (e, t = { classPrefix: m }) => {
   var n;
   e.config.globalProperties[l] = {
     ...(n = e.config.globalProperties[l]) != null ? n : {},

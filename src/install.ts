@@ -14,6 +14,7 @@ export function installComponent(
 
   if (!registered) {
     setGlobalConfig(app, options)
+
     app.component(componentPrefix + component.name, component)
   }
 }
