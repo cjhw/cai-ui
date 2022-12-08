@@ -4,7 +4,9 @@ import {
   inject,
   computed,
   ref,
-  provide
+  provide,
+  onMounted,
+  onUnmounted
 } from 'vue'
 import { FormItemProps, formItemProps, LabelData } from './form-item-type'
 import '../style/form-item.scss'
@@ -78,6 +80,18 @@ export default defineComponent({
       validate
     }
     provide('FORM_ITEM_CTX', formItemCtx)
+
+    // 挂载后注册到FormCtx中
+    onMounted(() => {
+      if (props.field) {
+        formCtx?.addItem(formItemCtx)
+      }
+    })
+    onUnmounted(() => {
+      if (props.field) {
+        formCtx?.removeItem(formItemCtx)
+      }
+    })
 
     return () => (
       <div class={itemClasses.value}>

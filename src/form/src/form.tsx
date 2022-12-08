@@ -1,12 +1,13 @@
 import { defineComponent, toRefs, computed, provide, InjectionKey } from 'vue'
-import type { Rules } from 'async-validator'
+import type { Rules, Values } from 'async-validator'
 import { FormItemContext } from './form-item-type'
-import { FormProps, formProps, LabelSize, LabelAlign } from './form-type'
+import { FormProps, formProps } from './form-type'
 
 export default defineComponent({
   name: 'Form',
   props: formProps,
-  setup(props: FormProps, { slots }) {
+  emits: ['submit'],
+  setup(props: FormProps, { slots, emit, expose }) {
     // 向下提供labal_data
     const labelData = computed(() => ({
       layout: props.layout,
@@ -28,7 +29,28 @@ export default defineComponent({
       removeItem
     })
 
-    return () => <div>{slots.default?.()}</div>
+    const submit = (event: Event) => {
+      event.preventDefault()
+      emit('submit')
+    }
+
+    function validate(callback: (valid: boolean) => void) {
+      const tasks: Array<Promise<Values>> = []
+      formItems.forEach(item => tasks.push(item.validate()))
+      Promise.all(tasks)
+        .then(() => callback(true))
+        .catch(() => callback(false))
+    }
+
+    expose({
+      validate
+    })
+
+    return () => (
+      <form class="s-form" onSubmit={submit}>
+        {slots.default?.()}
+      </form>
+    )
   }
 })
 
