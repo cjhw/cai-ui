@@ -1,3 +1,4 @@
+import { Value } from 'async-validator'
 import type { PropType, ExtractPropTypes } from 'vue'
 import { LabelAlign, LabelSize, Layout } from './form-type'
 
@@ -15,4 +16,8 @@ export type LabelData = {
   layout: Layout
   labelSize: LabelSize
   labelAlign: LabelAlign
+}
+
+export type FormItemContext = {
+  validate: () => Promise<Value>
 }

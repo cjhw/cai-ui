@@ -10,7 +10,7 @@
 <template>
   <c-form :model="model" layout="horizontal" labelSize="lg" labelAlign="start">
     <c-form-item label="用户名:" field="user">
-      <s-input v-model="model.user">
+      <c-input v-model="model.user">
     </c-form-item>
   </c-form>
   {{model}}
@@ -84,6 +84,53 @@ const model = ref({
 })
 const labelSize = ref('md')
 const labelAlign = ref('start')
+</script>
+```
+:::
+
+## 表单校验
+:::demo 
+```vue
+<template>
+  <c-form 
+    :model="model" 
+    :rules="rules" 
+    layout="vertical"
+    @submit="onLogin"
+    ref="loginForm"
+  >
+    <c-form-item label="用户名：" field="user">
+      <c-input v-model="model.user" />
+    </c-form-item>
+    <c-form-item label="密码：" field="pwd">
+      <c-input type="password" v-model="model.pwd" />
+    </c-form-item>
+    <c-form-item>
+      <button>登录</button>
+    </c-form-item>
+  </c-form>
+</template>
+<script setup>
+  import {ref} from 'vue'
+  const model = ref({
+    user: '',
+    pwd: ''
+  })
+  const rules = ref({
+    user: [{required: true, message: '用户名为必填项'}],
+    pwd: [{required: true, message: '密码为必填项'}],
+  })
+
+  const loginForm = ref(null)
+  const onLogin = () => {
+    loginForm.value.validate(valid => {
+      if (valid) {
+        alert('登录成功')
+      } else {
+        alert('校验失败，请重试！')
+      }
+    })
+  }
 </script>
 ```
 :::
